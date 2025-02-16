@@ -67,7 +67,13 @@ async function run() {
       res.send(result);
     })
 
-
+    // get specific user foodlist
+    app.get('/food-list', async(req, res) => {
+      const email = req.query.email;
+      const query = {addedByEmail: email}
+      const result = await foodsCollection.find(query).toArray();
+      res.send(result);
+    })
 
     // food order 
     app.post('/food-order', async (req, res) => {
