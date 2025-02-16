@@ -38,13 +38,21 @@ async function run() {
     const foodsCollection = client.db('restaurentManagement').collection('foods');
     const foodOrderCollection = client.db('restaurentManagement').collection('foodOrders');
 
+    // get all food 
     app.get('/foods', async(req, res) => {
         const cursor = foodsCollection.find();
         const result = await cursor.toArray();
         res.send(result);
     })
 
-    // get data by specific data 
+    // food post 
+    app.post('/foods', async (req, res) => {
+      const newFood = req.body;
+      const result = await foodsCollection.insertOne(newFood);
+      res.send(result)
+    })
+
+    // get data by specific id
     app.get('/foods/:id', async(req, res)=> {
       const id = req.params.id;
       const query = {_id: new ObjectId(id)}
@@ -58,6 +66,8 @@ async function run() {
       const result = await foodOrderCollection.find(query).toArray();
       res.send(result);
     })
+
+
 
     // food order 
     app.post('/food-order', async (req, res) => {
