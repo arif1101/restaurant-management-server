@@ -53,7 +53,17 @@ async function run() {
     })
 
     
-
+    // update data
+    app.put('/foods/:id', async(req,res) => {
+      const {id} = req.params;
+      const updatedFood = req.body;
+      delete updatedFood._id;
+      const result = await foodsCollection.updateOne(
+        {_id: new ObjectId(id)},
+        {$set: updatedFood}
+      );
+      res.send(result)
+    })
 
     // get data by specific id
     app.get('/foods/:id', async(req, res)=> {
