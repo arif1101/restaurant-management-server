@@ -54,6 +54,14 @@ async function run() {
 
     
 
+
+    // get data by specific id
+    app.get('/foods/:id', async(req, res)=> {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await foodsCollection.findOne(query);
+      res.send(result)
+    })
     // get specific user order 
     app.get('/food-orders', async(req, res) => {
       const email = req.query.email;
